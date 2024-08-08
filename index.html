@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>check-TimeStump</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="/image/favicon.ico">
+  </head>
+
+  <body class="padding-all-1rem">
+    <header>
+      <h1>タイムスタンプ関係の正誤チェックページ</h1>
+      <!-- ここにメニューを入れる -->
+    </header>
+
+    <main class="fluffy-open">
+
+      <!--  -->
+      <section>
+        <h2 class="title-in-section">各種データ貼り付け欄</h2>
+        <div class="padding-left-1rem">
+          <div>
+            <form action="" method="GET">
+              <!-- データ貼り付け欄 -->
+              <div class="display-flex">
+                <!-- 編集後データ貼り付け部分 -->
+                <div class="margin-bottom-3rem margin-right-3rem">
+                  <label for="afterData" class="display-block margin-bottom-1rem">編集後データ貼り付け欄</label>
+                  <textarea name="afterData" id="afterData" value="" rows="25" cols="50" class="display-block" onkeydown="possibleInputTabKey(event, this);">☆（００：００：００）		おはようございます。ただいまから本日の会議を開始いたします。	☆（００：００：０５）
+                    ☆（００：００：０６）		メロン議員、御登壇願います。	☆（００：００：１０）
+                    ☆（００：００：３０）		おはようございます。フルーツ党のメロンです。本日は貴重な機会をいただきありがとうございます。スイカは塩をかけなくても十分甘いかと思いますが、この件についての御見解をお願いいたします。	☆（００：０１：００）
+                    ☆（００：０１：０５）		おはようございます。議員御指摘のように、現在のスイカは塩をかけなくても十分甘いものが多いかと思います。昔は現在のものより甘くなかったため、塩をかけて甘さを引き出していたようでございます。	☆（００：０１：３５）
+                    ☆（００：０１：４５）		以上で本日の議題は全て終了いたしました。これにて閉会いたします。	☆（００：０２：００）</textarea>
+                </div>
+                <!-- 編集前データ貼り付け部分 -->
+                <div class="margin-bottom-3rem">
+                  <label for="beforeData" class="display-block margin-bottom-1rem">編集後データ貼り付け欄</label>
+                  <textarea name="beforeData" id="beforeData" value="" rows="25" cols="50" class="display-block">おはようございます。ただいまから本日の会議を開始いたします。
+                    メロン議員、御登壇願います。
+                    おはようございます。フルーツ党のメロンです。本日は貴重な機会をいただきありがとうございます。スイカは塩をかけなくても十分甘いかと思いますが、この件についての御見解をお願いいたします。
+                    おはようございます。議員御指摘のように、現在のスイカは塩をかけなくても十分甘いものが多いかと思います。昔は現在のものより甘くなかったため、塩をかけて甘さを引き出していたようでございます。
+                    以上で本日の議題は全て終了いたしました。これにて閉会いたします。</textarea>
+                </div>
+              </div>
+              <!-- ボタン部分 -->
+              <div>
+                <button type="button" id="thisFormSubmit" 
+                  onclick="setAfterDataControl(this.form, 'afterData');
+                  setBeforeDataControl(this.form, 'beforeData');"
+                >
+                  セッションストレージにデータを送信
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="title-in-section">各種データ出力欄</h2>
+        <div class="padding-left-1rem">
+          <div class="display-flex">
+            <!-- 編集後データ -->
+            <div class="margin-bottom-1rem code padding-all-1rem">
+              <form action="" method="POST" id="output_result_after_data">
+
+              </form>
+            </div>            
+          </div>
+          <!-- セッションストレージからアイテムを取得し出力 -->
+          <div>
+            <button type="button" onclick="resultCheckControl(['afterData', 'beforeData', ], ['output_result_after_data', 'output_result_before_data', ])">編集後データを取得＆出力</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer>
+    </footer>
+    
+    <script src="js/script.js"></script>
+    <script src="js/possibleInputTabKey.js"></script>
+    <script src="js/outputConsole.js"></script>
+    <script src="js/setAfterDataControl.js"></script>
+    <script src="js/setBeforeDataControl.js"></script>
+    <script src="js/setItemToSessionStorage.js"></script>
+    <script src="js/makeAfterDataMenuObject.js"></script>
+    <script src="js/makeBeforeDataMenuObject.js"></script>
+    <script src="js/makeArraySplitTabKey.js"></script>
+    <script src="js/makeTimeStampStringObject.js"></script>
+    <script src="js/convertNumberStringFullToHalf.js"></script>
+    <script src="js/makeSecondsValueObject.js"></script>
+    <script src="js/makeTotalSecondsValueObject.js"></script>
+    <script src="js/convertSecondsFromTimeStamp.js"></script>
+    <script src="js/makeIsCorrectFormatObject.js"></script>
+    <script src="js/makeIsCorrectSecondsObject.js"></script>
+    <script src="js/checkTimeStampValueRange.js"></script>
+    <script src="js/resultCheckControl.js"></script>
+    <script src="js/outputResultControl.js"></script>
+    <script src="js/getItemFromSessionStorage.js"></script>
+    <script src="js/checkCorrectFormat.js"></script>
+    <script src="js/checkCorrectFormatToDetails.js"></script>
+
+    <script>
+
+      
+
+      window.addEventListener('load', () => {
+      
+        
+
+      });
+    </script>
+
+  </body>
+</html>

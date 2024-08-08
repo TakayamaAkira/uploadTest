@@ -1,0 +1,567 @@
+body {
+  background-color: lightgray;
+  font-family: 'メイリオ', 'Meiryo', sans-serif;
+}
+
+* {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  min-width: 0;
+}
+
+header {
+  margin-bottom: 2rem;
+}
+
+article {
+  margin-bottom:5rem;
+  padding: 2rem;
+  background-color: floralwhite;
+  border-radius: 1rem;
+}
+
+section {
+  margin-bottom: 3rem;
+}
+
+details {
+  margin-bottom: 1rem;
+}
+
+pre {
+	white-space: pre-wrap;
+  font-family: 'メイリオ', 'Meiryo', sans-serif;
+}
+
+.summary-div {
+  background-color: floralwhite;
+  padding: 1rem;
+}
+
+.summary-ul {
+  flex-wrap: wrap;
+}
+
+details[open] .summary-open {
+  display: none;
+}
+
+details:not([open]) .summary-close {
+  display: none;
+}
+
+.div-ul-summary {
+  min-width: 30%;
+  margin-right: 2rem;
+}
+
+.fluffy-open {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0; 
+    transform: translateY(-10px); 
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.span-alert {
+  color: tomato;
+}
+
+.span-notification {
+  color: mediumblue;
+}
+
+.span-info {
+  color: green;
+}
+
+.list-style-none {
+  list-style: none;
+  transform: translate(-1rem);
+  font-weight: bold;
+}
+
+.div-php {
+  display: flex;
+  font-style: italic;
+  font-size: 1rem;
+  padding: 1rem;
+  margin: 2rem 0;
+}
+
+.div-img {
+  text-align: center;
+}
+
+.div-img img {
+  object-fit: cover;
+  max-height: 100%;
+  max-width: 100%;
+}
+
+footer {
+  margin: 2rem;
+}
+
+.form-container {
+  margin: 3rem 0;
+}
+
+.form-container {
+  display: flex;
+  font-style: italic;
+  font-weight: bold;
+  padding: 1rem;
+  margin: 1rem;
+  border: solid 1px gray;
+}
+
+.font-family-Meiryo {
+  font-family: 'メイリオ', 'Meiryo', sans-serif;
+}
+
+.div-position-center {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.div-in-div {
+  min-width: 40%;
+}
+
+.div-justify-content-row {
+  display: flex;
+  justify-content: center;
+}
+
+.div-justify-content-row div {
+  margin: 0 auto;
+}
+
+/* これを親要素に指定すると、子要素は縦横ともに中央揃えとなります。 */
+.position-all-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.p-text-align-center {
+  text-align: center;
+  margin: 0;
+}
+
+.div-justify-content-column {
+  justify-content: column; 
+}
+
+.padding-lr-1rem {
+  padding: 0 1rem;
+}
+
+.padding-lr-1rem {
+  padding: 0 1rem;
+}
+
+.padding-lr-1dot5rem {
+  padding: 0 1.5rem;
+}
+
+.padding-lr-2rem {
+  padding: 0 2rem;
+}
+
+.padding-lr-3rem {
+  padding: 0 3rem;
+}
+
+.padding-lr-3rem {
+  padding: 0 3rem;
+}
+
+.padding-lr-4rem {
+  padding: 0 4rem;
+}
+
+.padding-lr-5rem {
+  padding: 0 5rem;
+}
+
+.padding-left-1rem {
+  padding-left: 1rem;
+}
+
+.padding-left-1dot5rem {
+  padding-left: 1.5rem;
+}
+
+.padding-left-2rem {
+  padding-left: 2rem;
+}
+
+.padding-left-3rem {
+  padding-left: 3rem;
+}
+
+.padding-left-3rem {
+  padding-left: 3rem;
+}
+
+.padding-left-4rem {
+  padding-left: 4rem;
+}
+
+.padding-left-5rem {
+  padding-left: 5rem;
+}
+
+.padding-right-1rem {
+  padding-right: 1rem;
+}
+
+.padding-right-1dot5rem {
+  padding-right: 1.5rem;
+}
+
+.padding-right-2rem {
+  padding-right: 2rem;
+}
+
+.padding-right-3rem {
+  padding-right: 3rem;
+}
+
+.padding-right-3rem {
+  padding-right: 3rem;
+}
+
+.padding-right-4rem {
+  padding-right: 4rem;
+}
+
+.padding-right-5rem {
+  padding-right: 5rem;
+}
+
+ol {
+  padding: 0;
+}
+
+.ol-number li {
+  list-style: none;
+}
+
+.ol-number ol {
+    counter-reset: count -1;
+  }
+
+.ol-number li:before {
+    content: counter(count) ". ";
+    counter-increment: count 1;
+}
+
+.li-style-none-in-ol {
+  list-style: none;
+}
+
+.transform-translate-left-1rem {
+  transform: translate(-1rem);
+}
+
+.div-associative-array {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.div-associative-array div {
+  border: solid 1px gray;
+  padding: 0 1rem;
+  min-width: 25%;
+  border-radius: 1rem;
+}
+
+.margin-lr-1rem {
+  margin: 0 1rem;
+}
+
+.margin-right-1rem {
+  margin-right: 1rem;
+}
+
+.margin-right-2rem {
+  margin-right: 2rem;
+}
+
+.margin-right-3rem {
+  margin-right: 3rem;
+}
+
+.margin-right-4rem {
+  margin-right: 4rem;
+}
+
+.margin-right-5rem {
+  margin-right: 5rem;
+}
+
+.parent-div-associative-array {
+  margin-bottom: 2rem;
+}
+
+.margin-top-1rem {
+  margin-top: 1rem;
+}
+
+.margin-top-2rem {
+  margin-top: 2rem;
+}
+
+.margin-top-3rem {
+  margin-top: 3rem;
+}
+
+.margin-top-4rem {
+  margin-top: 4rem;
+}
+
+.margin-top-5rem {
+  margin-top: 5rem;
+}
+
+.margin-bottom-5rem {
+  margin-bottom: 5rem;
+}
+
+.margin-bottom-4rem {
+  margin-bottom: 4rem;
+}
+
+.margin-bottom-3rem {
+  margin-bottom: 3rem;
+}
+
+.margin-bottom-2rem {
+  margin-bottom: 2rem;
+}
+
+.margin-bottom-1rem {
+  margin-bottom: 1rem;
+}
+
+.padding-tb-1rem {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.border {
+  border: solid 1px gray;
+  border-radius: 1rem;
+}
+
+.padding-all-1rem {
+  padding: 1rem;
+}
+
+.padding-all-05rem {
+  padding: 0.5rem;
+}
+
+.translate-right-1rem {
+  transform: translate(1rem);
+}
+
+.translate-right-2rem {
+transform: translate(2rem);
+}
+
+.code-result {
+  padding: 2rem 4rem;
+}
+
+.input-width-20rem {
+  width: 20rem;
+}
+
+.margin-bottom-05rem {
+  margin-bottom: 0.5rem;
+}
+
+.div-form {
+  padding: 1rem;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.display-block {
+  display: block;
+}
+
+.display-inline {
+  display: inline;
+}
+
+.margin-bottom-1rem {
+  margin-bottom: 1rem;
+}
+
+.align-items-baseline {
+  align-items: baseline;
+}
+
+.margin-left-1rem {
+  margin-left: 1rem;
+}
+
+.margin-left-2rem {
+  margin-left: 2rem;
+}
+
+.margin-left-3rem {
+  margin-left: 3rem;
+}
+
+.text-decoration-none {
+  text-decoration: none;
+}
+
+.margin-bottom-05rem {
+  margin-bottom: 0.5rem;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.first-title-in-section {
+  border-left: solid lightskyblue 1rem;
+  margin: 2rem 0 2rem;
+  padding: 1rem 2rem;
+}
+
+.title-in-section {
+  border-left: solid lightskyblue 1rem;
+  margin: 4rem 0 2rem;
+  padding: 1rem 2rem;
+}
+
+.border-radius-1rem {
+  border-radius: 1rem;
+}
+
+.code {
+  border-radius: 1rem;
+  font-size: 1rem;
+  background-color: #EEFFFF;
+}
+
+.background-color-lightcyan {
+  background-color: lightcyan;
+}
+
+.border-bottom-01rem-coral {
+  border-bottom: solid 0.1rem coral;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}
+
+.font-size-1rem {
+  font-size: 1rem;
+}
+
+.font-size-1point5rem {
+  font-size: 1.5rem;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.line-height-1point5rem {
+  line-height: 1.5rem;
+}
+
+.line-height-2rem {
+  line-height: 2rem;
+}
+
+.word-break-break-all {
+  word-break: break-all;
+}
+
+.word-break-keep-all {
+  word-break: keep-all;
+}
+
+.max-width-50pa {
+  max-width: 50%;
+}
+
+.min-width-50pa {
+  min-width: 50%;
+}
+
+.min-width-40pa {
+  min-width: 40%;
+}
+
+.pseudo-element-diamond::before {
+  content: '◆';
+}
+
+.padding-0 {
+  padding: 0;
+}
+
+.divSpace20rem {
+  min-height: 20rem;
+  background-color: aliceblue;
+}
+
+.font-color-purple {
+  color: purple;
+}
+
+.child-div-padding-1rem > div {
+  padding-right: 1rem;
+}
+
+.border-left {
+  border-left: solid 1px gray;
+}
+
+.border-right {
+  border-right: solid 1px gray;
+}
+
+.display-none {
+  display: none;
+}
+
+.bg-color-aliceblue {
+  background-color: aliceblue;
+}
+
+.diagonal-line {
+  background-image: linear-gradient(
+    to right top,
+    transparent calc(50% - 0.5px),
+    #999 50%,
+    #999 calc(50% + 0.5px),
+    transparent calc(50% + 1px)
+  );
+}
+
+textarea {
+  max-width: 100%;
+}
