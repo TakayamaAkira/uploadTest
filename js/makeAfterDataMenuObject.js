@@ -11,6 +11,7 @@ function makeAfterDataMenuObject(argArray) {
       'timeStampSecondsValueObject': '',
       'isCorrectFormatObject': '',
       'isCorrectSecondsObject': '',
+      'allCorrectBool': false,
     };      
   }
 

@@ -1,12 +1,12 @@
-function checkCorrectFormat(array) {
+function checkCorrectFormat(argArray) {
 
   const correctFormat = /^☆（[０-９]{2,}：[０-５][０-９]：[０-５][０-９]）\t\t.+\t☆（[０-９]{2,}：[０-５][０-９]：[０-５][０-９]）$/;
 
   let count = 0;
   const noMatchIndexArray = [];
 
-  for (let i = 0; i < array.length; i ++) {
-    if (correctFormat.test(array[i])) {
+  for (let i = 0; i < argArray.length; i ++) {
+    if (correctFormat.test(argArray[i])) {
       // 何もせず次の処理へ。
     } else {
       count ++;

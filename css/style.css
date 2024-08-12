@@ -565,3 +565,7 @@ transform: translate(2rem);
 textarea {
   max-width: 100%;
 }
+
+.output-textarea {
+  width: 100%,
+}

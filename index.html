@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>check-TimeStump</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="icon" href="/image/favicon.ico">
+    <link rel="icon" href="image/favicon.ico">
   </head>
 
   <body class="padding-all-1rem">
@@ -45,11 +45,11 @@
               </div>
               <!-- ボタン部分 -->
               <div>
-                <button type="button" id="thisFormSubmit" 
-                  onclick="setAfterDataControl(this.form, 'afterData');
+                <button type="button" id="pasting_area_button" 
+                  onclick="afterDataProcessing(this.form, 'afterData', 'output_after_data_result');
                   setBeforeDataControl(this.form, 'beforeData');"
                 >
-                  セッションストレージにデータを送信
+                  編集後データをチェック
                 </button>
               </div>
             </form>
@@ -58,20 +58,53 @@
       </section>
 
       <section>
-        <h2 class="title-in-section">各種データ出力欄</h2>
+        <h2 class="title-in-section">編集前データの解析結果出力欄</h2>
+        <div class="padding-left-1rem">
+          <div class="display-flex margin-bottom-3rem">
+            <!-- 編集後データ -->
+            <div class="margin-bottom-1rem code padding-all-1rem">
+              <form action="" method="POST">
+                <div id="output_after_data_result"></div>
+                <!-- 編集後データを再度チェックするボタンです。 -->
+                <div class="margin-bottom-3rem">
+                  <button type="button" id="output_after_data_result_button" 
+                    onclick="afterDataProcessing(this.form, 'output_after_data_line[]', 'output_after_data_result');"
+                  >
+                    再チェック</button>
+                </div>
+                <!-- 編集後データと編集前データの本文を比較するボタンです。 -->
+                <div>
+                  <button type="button" 
+                    onclick="checkTextAfterVsBefore(
+                      this.form, 
+                      {'after': 'output_after_data_line[]', 'before': 'beforeData', }, 
+                      {'after': 'output_check_after_text', 'before': 'output_check_before_text', }
+                    );">
+                    編集後データと編集前データの本文をチェック
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>          
+        </div>
+      </section>
+
+
+      <section>
+        <h2 class="title-in-section">編集後データと編集前データの本文チェック結果出力欄</h2>
         <div class="padding-left-1rem">
           <div class="display-flex">
             <!-- 編集後データ -->
-            <div class="margin-bottom-1rem code padding-all-1rem">
-              <form action="" method="POST" id="output_result_after_data">
-
+            <div class="margin-bottom-1rem padding-all-1rem">
+              <form action="" method="POST">
+                <div  id="output_check_text" class="display-flex">
+                  <div id="output_check_after_text" class="code padding-all-1rem margin-right-3rem"></div>
+                  <div id="output_check_before_text" class="code padding-all-1rem"></div>
+                </div>
               </form>
             </div>            
           </div>
-          <!-- セッションストレージからアイテムを取得し出力 -->
-          <div>
-            <button type="button" onclick="resultCheckControl(['afterData', 'beforeData', ], ['output_result_after_data', 'output_result_before_data', ])">編集後データを取得＆出力</button>
-          </div>
+          
         </div>
       </section>
 
@@ -81,28 +114,29 @@
     </footer>
     
     <script src="js/script.js"></script>
-    <script src="js/possibleInputTabKey.js"></script>
-    <script src="js/outputConsole.js"></script>
-    <script src="js/setAfterDataControl.js"></script>
-    <script src="js/setBeforeDataControl.js"></script>
-    <script src="js/setItemToSessionStorage.js"></script>
-    <script src="js/makeAfterDataMenuObject.js"></script>
-    <script src="js/makeBeforeDataMenuObject.js"></script>
-    <script src="js/makeArraySplitTabKey.js"></script>
-    <script src="js/makeTimeStampStringObject.js"></script>
-    <script src="js/convertNumberStringFullToHalf.js"></script>
-    <script src="js/makeSecondsValueObject.js"></script>
-    <script src="js/makeTotalSecondsValueObject.js"></script>
-    <script src="js/convertSecondsFromTimeStamp.js"></script>
-    <script src="js/makeIsCorrectFormatObject.js"></script>
-    <script src="js/makeIsCorrectSecondsObject.js"></script>
-    <script src="js/checkTimeStampValueRange.js"></script>
-    <script src="js/resultCheckControl.js"></script>
-    <script src="js/outputResultControl.js"></script>
-    <script src="js/getItemFromSessionStorage.js"></script>
+    <script src="js/afterDataProcessing.js"></script>
     <script src="js/checkCorrectFormat.js"></script>
     <script src="js/checkCorrectFormatToDetails.js"></script>
-
+    <script src="js/checkTextAfterVsBefore.js"></script>
+    <script src="js/convertNumberStringFullToHalf.js"></script>
+    <script src="js/convertSecondsFromTimeStamp.js"></script>
+    <script src="js/getItemFromSessionStorage.js"></script>
+    <script src="js/makeAfterDataMenuObject.js"></script>
+    <script src="js/makeArraySplitTabKey.js"></script>
+    <script src="js/makeBeforeDataMenuObject.js"></script>
+    <script src="js/makeIsCorrectFormatObject.js"></script>
+    <script src="js/makeIsCorrectSecondsObject.js"></script>
+    <script src="js/makeMainTextArray.js"></script>
+    <script src="js/makeSecondsValueObject.js"></script>
+    <script src="js/makeTimeStampStringObject.js"></script>
+    <script src="js/makeTotalSecondsValueObject.js"></script>
+    <script src="js/outputConsole.js"></script>
+    <script src="js/outputAfterDataResult.js"></script>
+    <script src="js/possibleInputTabKey.js"></script>
+    <script src="js/setAndCheckAfterData.js"></script>
+    <script src="js/setBeforeDataControl.js"></script>
+    <script src="js/setItemToSessionStorage.js"></script>
+    
     <script>
 
       
