@@ -7,6 +7,7 @@ function makeAfterDataMenuObject(argArray) {
     deepCopiedArray[i] = {      
       'baseLineString': deepCopiedArray[i],
       'splitBaseLineStringArray': '',
+      'mainDataObject': '',
       'timeStampStringObject': '',
       'timeStampSecondsValueObject': '',
       'isCorrectFormatObject': '',

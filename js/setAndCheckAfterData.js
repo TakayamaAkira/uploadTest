@@ -1,32 +1,16 @@
-function setAndCheckAfterData(argObject, nameString) {
+function setAndCheckAfterData(arg, nameString) {
 
-  // 想定ではargObjectの中身はform要素です。
-  // form要素でない場合、通常の処理を行うことができないためnullをreturnして処理を終えます。
-  // nullはtypeof演算子で「'object'」が返ってきてしまうため、同時にnullチェックも行います。
-  if (typeof argObject !== 'object' || argObject === null) {
-    return null;
-  } else {
-    // 何もせず次の処理へ。
-  }
-
-  const formStrings = (function(argObject, nameString) {
-    let allStrings = '';
-    for (let i = 0; i < argObject.length; i ++) {
-      if (argObject[i].name === nameString) {
-        allStrings += argObject[i].value + '\n';
-      }
-    }
-    // 文字列の最後にある「\n」を削除します。
-    const replaceLastLineBreakStrings = allStrings.replace(/\n$/, '');
-    return replaceLastLineBreakStrings;
-  }(argObject, nameString));
-
-
-  if (formStrings !== '') {
+  // argの中身が下記のとおりになっていることを想定しています。順番も例示のとおりです。
+  // ・「頭のタイムスタンプ」
+  // ・「タブ記号×2」
+  // ・「本文」
+  // ・「お尻のタイムスタンプ」
+  // ・「改行記号」
+  if (arg !== '') {
     // テスト環境ではformにテキストを打ち込んだ状態のため半角スペースを削除する処理を行っています。
     // 本番環境では、本文中の半角スペースまで削除してしまうため、絶対に行わないこと！
     // 下記「本番環境ではこっちを使用」を必ず使用すること。
-    const replaceAfterData = formStrings.replace(/ /g, '');
+    const replaceAfterData = arg.replace(/ /g, '');
     const splitNewLineAfterData = replaceAfterData.split('\n');
     const afterDataMenuArray = makeAfterDataMenuObject(splitNewLineAfterData);
     const lastLengthMinus_1_value = afterDataMenuArray.length - 1;
@@ -35,6 +19,9 @@ function setAndCheckAfterData(argObject, nameString) {
     for (let i = 0; i < afterDataMenuArray.length; i ++) {
       // 行ごとにタブ記号で分割した配列にし、afterDataMenuArray[i]['splitBaseLineStringArray']に格納します。
       afterDataMenuArray[i]['splitBaseLineStringArray'] = makeArraySplitTabKey(afterDataMenuArray[i]['baseLineString']);
+
+      // 頭のタイムスタンプからお尻のタイムスタンプまでを扱いやすいオブジェクト形式のデータに加工し、afterDataMenuArray[i]['mainDataObject']に格納します。
+      afterDataMenuArray[i]['mainDataObject'] = makeMainDataObject(afterDataMenuArray[i]['splitBaseLineStringArray']);
 
       // タイムスタンプから「時」「分」「秒」の桁ごとに文字列を取得し、afterDataMenuArray[i]['timeStampStringObject']に格納します。
       const timeStampStringObject = makeTimeStampStringObject(afterDataMenuArray[i]['splitBaseLineStringArray']);
@@ -92,6 +79,7 @@ function setAndCheckAfterData(argObject, nameString) {
           
       }(afterDataMenuArray, me, lastLengthMinus_1_value)); // end of const isCorrectSecondsObject
 
+
       // 作成したオブジェクトをafterDataMenuArray[i]['isCorrectSecondsObject']に格納します。
       afterDataMenuArray[me]['isCorrectSecondsObject'] = isCorrectSecondsObject;
 
@@ -119,7 +107,7 @@ function setAndCheckAfterData(argObject, nameString) {
 
   } else {
     // 何もせず次の処理へ。
-  } // end of if (formStrings !== '')
+  } // end of if (arg !== '')
   
   // nameStringと同じ値を持つname属性値がない場合、ここまで来ます。
   // alertを出力して注意喚起するとともに、nullをreturnして処理を終えます。

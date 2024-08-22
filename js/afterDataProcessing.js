@@ -1,6 +1,8 @@
-function afterDataProcessing(thisForm, nameString, outputTargetString) {
+function afterDataProcessing(thisForm, buttonIdString, nameString, outputTargetString) {
+
+  const arrangedFormAfterDataString = arrangeFormData(thisForm, buttonIdString, nameString['extractionAttributeName']);
   
-  const checkedAfterData = setAndCheckAfterData(thisForm, nameString);
+  const checkedAfterData = setAndCheckAfterData(arrangedFormAfterDataString, nameString['setItemName']);
   
   outputAfterDataResult(checkedAfterData, outputTargetString);
 

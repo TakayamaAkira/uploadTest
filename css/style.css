@@ -569,3 +569,24 @@ textarea {
 .output-textarea {
   width: 100%,
 }
+
+.background-color-red {
+  background-color: red;
+}
+
+.visibility-hidden {
+  visibility: hidden;
+}
+
+.display-none {
+  display: none;
+}
+
+.textarea-background-color-pink {
+  background-color: pink;
+}
+
+.download-anchor-tag {
+  border: solid;
+  background-color: lightgray;
+}

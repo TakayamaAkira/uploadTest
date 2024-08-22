@@ -2,6 +2,7 @@ function makeIsCorrectSecondsObject(argObject, currentLengthString) {
   
   const deepCopiedObject = JSON.parse(JSON.stringify(argObject));
 
+  // 即時関数の戻り値を定数resultObjectに代入します。
   const resultObject = (function(argObject, currentLengthString) {
     
     const checkedObject = {
@@ -25,6 +26,15 @@ function makeIsCorrectSecondsObject(argObject, currentLengthString) {
         'flowOfTime': '',
         'withinRangeBool': false,
       },
+
+      // タイムスタンプの秒数が問題ないかどうかには全く影響しない項目です。
+      // 後で処理するmakePlusOneSecondsFlagObject関数で使えるようにここで取得、格納しておきます。
+      // 便宜上、次の行の頭からお尻の秒数に問題がないかを解析し、結果を格納しておきます。headToHipと調べることは同じです。
+      'nextHeadToNextHip': {
+        'secondsValue': 0,
+        'flowOfTime': '',
+        'withinRangeBool': false,
+      },
     };
 
 
@@ -37,6 +47,8 @@ function makeIsCorrectSecondsObject(argObject, currentLengthString) {
       const headToHipOverLimitSeconds = 45;
       const headToNextHeadMinimumLimitSeconds = 0;
       const hipToNextHeadLimitSecond = -4;
+      const nextHeadToNextHipMinimumLimitSeconds = 0;
+      const nextHeadToNextHipOverLimitSeconds = 45;
 
       let falseCount = 0;
 
@@ -85,12 +97,28 @@ function makeIsCorrectSecondsObject(argObject, currentLengthString) {
           }
           break;
 
+        case 'nextHeadToNextHip':
+          if (nextHeadToNextHipMinimumLimitSeconds <= argObject['secondsValue'] && argObject['secondsValue'] <= nextHeadToNextHipOverLimitSeconds) {
+            argObject['flowOfTime'] = 'normal';
+            argObject['withinRangeBool'] = true;
+          } else {
+            falseCount ++;
+            if (argObject['secondsValue'] < nextHeadToNextHipMinimumLimitSeconds) {
+              argObject['flowOfTime'] = 'reverseRun';
+            } else if (nextHeadToNextHipOverLimitSeconds < argObject['secondsValue']){
+              argObject['flowOfTime'] = 'overRun';
+            } else {
+              // 何もせず次の処理へ。
+            }
+          } 
+          break;
+
         default :
           falseCount ++;
           break;
       }
       return falseCount;
-    };
+    }; // end of const addFlowAndWithin
 
 
     // switch文を使用して各条件の「秒数」をオブジェクトに格納します。
@@ -107,6 +135,9 @@ function makeIsCorrectSecondsObject(argObject, currentLengthString) {
 
         // hipToNextHead
         checkedObject['hipToNextHead']['secondsValue'] = argObject['next']['head'] - argObject['current']['hip'];
+
+        // nextHeadToNextHip
+        checkedObject['nextHeadToNextHip']['secondsValue'] = argObject['next']['hip'] - argObject['next']['head'];
         break;
 
       case 'halfway':
@@ -118,18 +149,28 @@ function makeIsCorrectSecondsObject(argObject, currentLengthString) {
 
         // hipToNextHead
         checkedObject['hipToNextHead']['secondsValue'] = argObject['next']['head'] - argObject['current']['hip'];
+
+        // headToHip
+        checkedObject['nextHeadToNextHip']['secondsValue'] = argObject['next']['hip'] - argObject['next']['head'];
         break;
 
       case 'last':
         // headToHip
         checkedObject['headToHip']['secondsValue'] = argObject['current']['hip'] - argObject['current']['head'];
+
+        // 「'last'」の下記3つのオブジェクトの「'secondsValue'」は、次の行がないためデフォルト値の「0」のままにしておきます。
+        // 「0」のままにしておけば、addFlowAndWithin関数を実行しても「'flowOfTime'」は「'normal'」、「'withinRangeBool'」は「true」が返ってくるので問題ありません。
+        // ・「'headToNextHead'」
+        // ・「'hipToNextHead'」
+        // ・「'nextHeadToNextHip'」
         break;
 
     } // end of switch (currentLengthString)
 
+
     Object.keys(checkedObject).forEach((floor_1_key) => {
       if (typeof checkedObject[floor_1_key] === 'object' && checkedObject[floor_1_key] !== null) {
-        if (floor_1_key === 'headToHip' || floor_1_key === 'headToNextHead' || floor_1_key === 'hipToNextHead') {
+        if (floor_1_key === 'headToHip' || floor_1_key === 'headToNextHead' || floor_1_key === 'hipToNextHead' || floor_1_key === 'nextHeadToNextHip') {
           checkedObject['falseCount'] += addFlowAndWithin(checkedObject[floor_1_key], floor_1_key);
         } else {
           // 何もせず次の処理へ。
@@ -138,6 +179,7 @@ function makeIsCorrectSecondsObject(argObject, currentLengthString) {
         // 何もせず次の処理へ。
       } 
     }); // end of Object.keys(checkedObject).forEach((floor_1_key) =>
+      
 
     if (checkedObject['falseCount'] === 0) {
       checkedObject['totalCorrectBool'] = true;     
@@ -146,7 +188,7 @@ function makeIsCorrectSecondsObject(argObject, currentLengthString) {
     }
 
     return checkedObject;
-  }(deepCopiedObject, currentLengthString));
+  }(deepCopiedObject, currentLengthString)); // end of resultObject
   
   return resultObject;
 }

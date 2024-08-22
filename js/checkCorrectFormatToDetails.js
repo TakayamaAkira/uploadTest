@@ -1,6 +1,6 @@
 function checkCorrectFormatToDetails(arg) {
 
-  const argArray = makeArraySplitTabKey(arg);
+  const argArray = makeSplitTabKeyObject(arg);
 
   // const checkPattern = /^☆（[０-９]{2,}：[０-５][０-９]：[０-５][０-９]）\t\t.+\t☆（[０-９]{2,}：[０-５][０-９]：[０-５][０-９]）$/;
 

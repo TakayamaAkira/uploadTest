@@ -45,11 +45,11 @@ function outputAfterDataResult(argArray = null, outputTargetString) {
       outputTarget.innerHTML += 
         '<div class="display-flex padding-all-1rem">' +
           '<div class="margin-right-2rem">' + 
-            '<span>問題なし</span>' + 
+            '<label for="after_data_is_correct_format_line[]_' + i + '"><span>問題なし</span></label>' + 
           '</div>' + 
           '<div class="output-textarea">' + 
             // 幅、高さは、実際に編集する際のエディタと同じような感じにしています。
-            '<textarea id="output_after_data_line[]" name="output_after_data_line[]" cols="80" rows="4">' + 
+            '<textarea id="after_data_is_correct_format_line[]_' + i + '" name="after_data_is_correct_format_line[]" cols="80" rows="4" onkeydown="possibleInputTabKey(event, this);">' + 
               deepCopiedArgArray[i]['baseLineString'] + 
             '</textarea>' +
           '</div>' +
@@ -60,11 +60,11 @@ function outputAfterDataResult(argArray = null, outputTargetString) {
           '<div class="margin-right-2rem">' + 
             // ここの出力要素は関数で作成予定です。
             // deepCopiedArgArrayを関数に渡し、エラー項目を抽出、エラー箇所に応じて出力要素を格納したオブジェクトを作成し、returnすればよさそう。
-            '<span class="span-alert">問題あり</span>' + 
+            '<label for="after_data_is_correct_format_line[]_' + i + '"><span class="span-alert">問題あり</span></label>' + 
           '</div>' + 
           '<div class="output-textarea">' + 
             // 幅、高さは、実際に編集する際のエディタと同じような感じにしています。
-            '<textarea id="output_after_data_line[]" name="output_after_data_line[]" cols="80" rows="4">' + 
+            '<textarea id="after_data_is_correct_format_line[]_' + i + '" name="after_data_is_correct_format_line[]" cols="80" rows="4" onkeydown="possibleInputTabKey(event, this);">' + 
               deepCopiedArgArray[i]['baseLineString'] + 
             '</textarea>' +
           '</div>' +

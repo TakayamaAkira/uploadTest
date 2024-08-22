@@ -1,27 +1,27 @@
 function makeTimeStampStringObject(argArray) {
-  
+
   const pickupTimeStamp = (function(argArray) {
-    const returnArray = [];
+    const temporaryArray = [];
     const findPattern = /^☆（[０-９]{2,}：[０-５][０-９]：[０-５][０-９]）$/;
     for (let i = 0; i < argArray.length; i ++) {
       if (findPattern.test(argArray[i])) {
-        returnArray.push(argArray[i]);
+        temporaryArray.push(argArray[i]);
       } else {
         // 何もせず次の処理へ。
       }
     }
-    return returnArray;
+    return temporaryArray;
   }(argArray));
 
 
   const splitDigitTimeStampArray = (function(argArray) {
-    const returnArray = [];
+    const temporaryArray = [];
     for (let i = 0; i < argArray.length; i ++) {
       const replaceTimeStampString = argArray[i].replace(/[☆|（|）]/g, '');
       const splitTimeStampArray = replaceTimeStampString.split('：');
-      returnArray.push(splitTimeStampArray);
+      temporaryArray.push(splitTimeStampArray);
     }
-    return returnArray;
+    return temporaryArray;
   }(pickupTimeStamp)); // const splitDigitTimeStampArray = (function
 
 

@@ -1,19 +1,21 @@
-function makeMainTextArray(argArray, targetName = null) {
+function makeMainTextArray(arg, targetName = null) {
 
-  const deepCopiedArgArray = JSON.parse(JSON.stringify(argArray));
+  // 第1引数argは想定では下記のとおり渡されます。
+  // 第2引数が「'after'」の場合：文字列型の文字列
+  // 第2引数が「'before'」の場合：文字列型の文字列を格納した配列
+
+  const deepCopiedArg = JSON.parse(JSON.stringify(arg));
   let extractText = '';
 
   try {
     switch (targetName) {
       case 'after':
-        for (let i = 0; i < deepCopiedArgArray.length; i ++) {
-          extractText += deepCopiedArgArray[i]['splitBaseLineStringArray'][2];
-        }
+        extractText = deepCopiedArg;
         break;
   
       case 'before':
-        for (let i = 0; i < deepCopiedArgArray['baseLineStringArray'].length; i ++) {
-          extractText += deepCopiedArgArray['baseLineStringArray'][i];
+        for (let i = 0; i < deepCopiedArg['baseLineStringArray'].length; i ++) {
+          extractText += deepCopiedArg['baseLineStringArray'][i];
         }
         break;
   
