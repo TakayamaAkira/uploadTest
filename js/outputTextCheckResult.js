@@ -1,11 +1,4 @@
 function outputTextCheckResult(outputTargetObject, comparisonTargetObject, nameAttributeObject, resultCheckArray) {
-  // checkedAfterData, periodSplitBeforeTextArray, resultCheckArray
-  
-  console.log('---outputTextCheckResult---');
-  outputConsole({ outputTargetObject });
-  outputConsole({ comparisonTargetObject });
-  outputConsole({ nameAttributeObject });
-  outputConsole({ resultCheckArray });
 
   const afterDataOutputTarget = document.getElementById(outputTargetObject['after']);
   const beforeDataOutputTarget = document.getElementById(outputTargetObject['before']);

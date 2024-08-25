@@ -23,28 +23,24 @@
           <div>
             <form action="" method="GET">
               <!-- データ貼り付け欄 -->
-              <div class="display-flex">
+              <div class="display-flex margin-bottom-3rem">
+
+                <!-- 編集前データ貼り付け部分 -->
+                <div class="margin-right-3rem">
+                  <label for="before_data" class="display-block margin-bottom-1rem">編集前データ貼り付け欄</label>
+                  <textarea name="before_data" id="before_data" rows="25" cols="50" class="display-block" placeholder="この欄に編集後データを貼り付けてください。"></textarea>
+                </div>
+
                 <!-- 編集後データ貼り付け部分 -->
-                <div class="margin-bottom-3rem margin-right-3rem">
+                <div class="margin-right-3rem">
                   <label for="after_data" class="display-block margin-bottom-1rem">編集後データ貼り付け欄</label>
                   <textarea name="after_data" id="after_data" rows="25" cols="50" class="display-block" placeholder="この欄に編集後データを貼り付けてください。"
                     onkeydown="possibleInputTabKey(event, this);"
-                  >☆（００：００：００）		おはようございます。ただいまから本日の会議を開始いたします。	☆（００：００：０５）
-                    ☆（００：００：０６）		メロン議員、御登壇願います。	☆（００：００：１０）
-                    ☆（００：００：３０）		おはようございます。フルーツ党のメロンです。本日は貴重な機会をいただきありがとうございます。スイカは塩をかけなくても十分甘いかと思いますが、この件についての御見解をお願いいたします。	☆（００：０１：００）
-                    ☆（００：０１：０５）		おはようございます。議員御指摘のように、現在のスイカは塩をかけなくても十分甘いものが多いかと思います。昔は現在のものより甘くなかったため、塩をかけて甘さを引き出していたようでございます。	☆（００：０１：３５）
-                    ☆（００：０１：４５）		以上で本日の議題は全て終了いたしました。これにて閉会いたします。	☆（００：０２：００）</textarea>
+                  ></textarea>
                 </div>
-                <!-- 編集前データ貼り付け部分 -->
-                <div class="margin-bottom-3rem">
-                  <label for="before_data" class="display-block margin-bottom-1rem">編集前データ貼り付け欄</label>
-                  <textarea name="before_data" id="before_data" rows="25" cols="50" class="display-block" placeholder="この欄に編集後データを貼り付けてください。">おはようございます。ただいまから本日の会議を開始いたします。
-                    メロン議員、御登壇願います。
-                    おはようございます。フルーツ党のメロンです。本日は貴重な機会をいただきありがとうございます。スイカは塩をかけなくても十分甘いかと思いますが、この件についての御見解をお願いいたします。
-                    おはようございます。議員御指摘のように、現在のスイカは塩をかけなくても十分甘いものが多いかと思います。昔は現在のものより甘くなかったため、塩をかけて甘さを引き出していたようでございます。
-                    以上で本日の議題は全て終了いたしました。これにて閉会いたします。</textarea>
-                </div>
+
               </div>
+
               <!-- ボタン部分 -->
               <div>
                 <button type="button" id="pasting_area_button" 
@@ -102,6 +98,10 @@
                     再チェック</button>
                 </div>
 
+                <div>
+                  <p>上記チェックで問題のないことを確認したら、本文チェックをします。</p>
+                </div>
+
                 <!-- お尻のタイムスタンプにプラス1秒する場合のボタンです。 -->
                 <div class="margin-bottom-3rem">
                   <button type="button" id="plus_one_seconds_button" 
@@ -115,10 +115,17 @@
                         },                        
                         'output_after_data_result'
                       );
-                      plusOneSecondsProcessing('after_data_is_correct_format_line[]');
+                      plusOneSecondsProcessing('after_data_is_correct_format_line[]', 'plus_one_seconds_after_data');
+                      checkTextAfterVsBefore(
+                        this.form, 
+                        'plus_one_seconds_button',
+                        {'after': 'plus_one_seconds_after_data', 'before': 'before_data', }, 
+                        {'after': 'plus_one_seconds_after_data', 'before': 'before_data', },
+                        {'after': 'output_check_after_text', 'before': 'output_check_before_text', },
+                      );
                     "
                   >
-                    お尻のタイムスタンプにプラス１秒するボタン</button>
+                    編集後データと編集前データの本文をチェック（タイムスタンプにプラス１秒<span class="span-notification font-weight-bold">する</span><span class="span-info font-weight-bold">※こちらを推奨</span>）</button>
                 </div>
 
                 <!-- 編集後データと編集前データの本文を比較するボタンです。 -->
@@ -134,7 +141,7 @@
                       );
                     "
                   >
-                    編集後データと編集前データの本文をチェック
+                  編集後データと編集前データの本文をチェック（タイムスタンプにプラス１秒<span class="span-alert font-weight-bold">しない</span>）
                   </button>
                 </div>
               </form>
@@ -250,7 +257,10 @@
     <script src="js/checkTextAfterVsBefore.js"></script>
     <script src="js/convertNumberStringFullToHalf.js"></script>
     <script src="js/convertSecondsFromTimeStamp.js"></script>
+    <script src="js/convertSecondsToTimeObject.js"></script>
+    <script src="js/doPlusOneSeconds.js"></script>
     <script src="js/getItemFromSessionStorage.js"></script>
+    <script src="js/makeAddedPlusOneTimeStampString.js"></script>
     <script src="js/makeAfterDataMenuObject.js"></script>
     <script src="js/makeArraySplitTabKey.js"></script>
     <script src="js/makeBeforeDataMenuObject.js"></script>
@@ -280,8 +290,14 @@
 
       window.addEventListener('load', () => {
       
-        
-        
+        /*
+        if (sessionStorage.getItem('after_data')) {
+          console.log('セッションストレージからafter_dataの取得に成功しました');
+          plusOneSecondsProcessing('after_data', 'plus_one_seconds_after_data');
+        } else {
+          console.log('after_dataはまだセッションストレージに保存されていません');
+        }
+        */
 
       });
     </script>

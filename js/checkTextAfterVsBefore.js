@@ -1,6 +1,34 @@
 function checkTextAfterVsBefore(thisForm, buttonIdString, extractionAttributeNameObject, setItemNameObject, outputTargetObject) {
 
-  const arrangedFormAfterDataString = arrangeFormData(thisForm, buttonIdString, extractionAttributeNameObject['after']);
+  const arrangedFormAfterDataString = (function(thisForm, buttonIdString, extractionAttributeNameObject) {
+    let temporaryData = '';
+
+    if (buttonIdString ===  'plus_one_seconds_button') {
+      const sessionItemName = extractionAttributeNameObject['after'];
+
+      temporaryData = (function(sessionItemName) {
+
+        let totalString = '';
+        const sessionItemArray = JSON.parse(sessionStorage.getItem(sessionItemName));
+        for (i = 0; i < sessionItemArray.length; i ++) {
+          totalString += sessionItemArray[i]['baseLineString'] + '\n';
+        }
+
+        // 文字列の最後にある「\n」を削除します。
+        const replaceLastLineBreakStrings = totalString.replace(/\n$/, '');
+
+        // 全ての文字列を格納した定数replaceLastLineBreakStringsをreturnして処理を終えます。
+        return replaceLastLineBreakStrings;
+      }(sessionItemName));
+      
+    } else {
+      temporaryData = arrangeFormData(thisForm, buttonIdString, extractionAttributeNameObject['after']);
+    }
+
+    return temporaryData;
+  }(thisForm, buttonIdString, extractionAttributeNameObject)); // const arrangedFormAfterDataString
+
+
 
   const checkedAfterData = setAndCheckAfterData(arrangedFormAfterDataString, setItemNameObject['after']);
 
@@ -20,15 +48,18 @@ function checkTextAfterVsBefore(thisForm, buttonIdString, extractionAttributeNam
       // 何もせず次の処理へ。
     }
 
-  }(buttonIdString));
+    if (buttonIdString === 'plus_one_seconds_button') {
+      const sessionItemName = extractionAttributeNameObject['before'];
+      return JSON.parse(sessionStorage.getItem(sessionItemName));
+    } else {
+      // 何もせず次の処理へ。
+    }
 
-  outputConsole({ beforeData });
+  }(buttonIdString)); // end of const beforeData
   
 
   const periodSplitBeforeTextArray = makeMainTextArray(beforeData, 'before');
 
-  outputConsole({ checkedAfterData });
-  outputConsole({ periodSplitBeforeTextArray });
 
   let afterDataMainTextSplitPeriodCount = 0;
 
@@ -36,7 +67,7 @@ function checkTextAfterVsBefore(thisForm, buttonIdString, extractionAttributeNam
     for (let me = 0; me < checkedAfterData[i]['mainDataObject']['object_2_mainTextArray'].length; me ++) {
       afterDataMainTextSplitPeriodCount ++;
     }
-  }
+  } // end of for (let i = 0; i < checkedAfterData.length; i ++)
 
   
   // 編集後データと編集前データのそれぞれの本文を「。」で分割した行数を比較し、多いほうの数を取得します。
@@ -45,11 +76,13 @@ function checkTextAfterVsBefore(thisForm, buttonIdString, extractionAttributeNam
     const lengthValueArray = [];
     lengthValueArray.push(afterDataMainTextSplitPeriodCount);
     lengthValueArray.push(periodSplitBeforeTextArray.length);
+
     return new Array(Math.max(...lengthValueArray));
-  }(afterDataMainTextSplitPeriodCount, periodSplitBeforeTextArray));
+  }(afterDataMainTextSplitPeriodCount, periodSplitBeforeTextArray)); // end of const resultCheckArray
 
 
   let resultCheckArrayIndexCount = 0;
+
 
   for (let i = 0; i < checkedAfterData.length; i ++) {
     for (let me = 0; me < checkedAfterData[i]['mainDataObject']['object_2_mainTextArray'].length; me ++) {
@@ -64,33 +97,34 @@ function checkTextAfterVsBefore(thisForm, buttonIdString, extractionAttributeNam
       }
       resultCheckArrayIndexCount ++;
     }
-  }
+  } // end of for (let i = 0; i < checkedAfterData.length; i ++)
+
 
   // 編集後の本文の「。」が編集前の本文の「。」より少ない場合、resultCheckArrayに空要素が発生してしまいます。
   // 条件分岐を用いて空要素になっている配列にfalseを格納します。
   if (resultCheckArrayIndexCount < resultCheckArray.length) {
     for (let i = resultCheckArrayIndexCount; i < resultCheckArray.length; i ++) {
-      console.log(i + ' :の要素にfalseを格納します');
       resultCheckArray[i] = false;
     }
   } else {
     // 何もせず次の処理へ。
-  }
+  } // end of if (resultCheckArrayIndexCount < resultCheckArray.length)
 
-  outputConsole({ resultCheckArray });
 
   const comparisonTargetObject = {
     'after': checkedAfterData,
     'before': periodSplitBeforeTextArray,
-  };
+  }; // end of const comparisonTargetObject
 
   const nameAttributeObject = {
     'after': 'checked_after_text[]',
     'before': 'checked_before_text[]',
-  };
+  }; // end of const nameAttributeObject
 
 
+  // 本文チェック結果をoutputTargetObjectで指定した2箇所に出力します。
   outputTextCheckResult(outputTargetObject, comparisonTargetObject, nameAttributeObject, resultCheckArray);
 
+  // 返り値はないため何もreturnせずに処理を終えます。
   return;
 }
