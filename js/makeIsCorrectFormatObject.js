@@ -39,6 +39,7 @@ function makeIsCorrectFormatObject(argObject) {
     const detail_3_CorrectPattern = /.+/;
     const detail_3_stringCountLimit = 150;
     const detail_3_prohibitionPattern = /〓|●|★|☆/;
+    const detail_3_halfWidthSpace = /\s/;
 
     let falseCount = 0;
 
@@ -119,8 +120,14 @@ function makeIsCorrectFormatObject(argObject) {
           } else {
             falseCount ++;
           }
-          if (checkedObject['details']['detail_3']['format'] === true && checkedObject['details']['detail_3']['prohibitionBool'] === true) {
+
+          if (
+            checkedObject['details']['detail_3']['format'] === true 
+            && checkedObject['details']['detail_3']['prohibitionBool'] === true 
+            && checkedObject['details']['detail_3']['stringCountBool'] === true 
+          ) {
             checkedObject['details']['detail_3']['detail_3_correctBool'] = true;
+
           } else {
             // 何もせず次の処理へ。
           }

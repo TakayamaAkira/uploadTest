@@ -14,5 +14,4 @@ function convertSecondsFromTimeStamp(argObject) {
   const totalSecondsObject = makeTotalSecondsValueObject(secondsValueObject);
 
   return totalSecondsObject;
-
 }

@@ -19,7 +19,7 @@ function checkTextAfterVsBefore(thisForm, buttonIdString, extractionAttributeNam
 
         // 全ての文字列を格納した定数replaceLastLineBreakStringsをreturnして処理を終えます。
         return replaceLastLineBreakStrings;
-      }(sessionItemName));
+      }(sessionItemName)); // end of temporaryData = (function(sessionItemName)
       
     } else {
       temporaryData = arrangeFormData(thisForm, buttonIdString, extractionAttributeNameObject['after']);
@@ -36,14 +36,16 @@ function checkTextAfterVsBefore(thisForm, buttonIdString, extractionAttributeNam
   const beforeData = (function(buttonIdString)  {
     
     if (buttonIdString === 'check_text_after_vs_before') {
-      return JSON.parse(sessionStorage.getItem('before_data'));
+      const sessionItemName = extractionAttributeNameObject['before'];
+      return JSON.parse(sessionStorage.getItem(sessionItemName));
     } else {
       // 何もせず次の処理へ。
     }
 
 
     if (buttonIdString === 'again_check_text_after_vs_before') {
-      return JSON.parse(sessionStorage.getItem('checked_before_text[]'));
+      const sessionItemName = extractionAttributeNameObject['before'];
+      return JSON.parse(sessionStorage.getItem(sessionItemName));
     } else {
       // 何もせず次の処理へ。
     }
@@ -61,59 +63,47 @@ function checkTextAfterVsBefore(thisForm, buttonIdString, extractionAttributeNam
   const periodSplitBeforeTextArray = makeMainTextArray(beforeData, 'before');
 
 
-  let afterDataMainTextSplitPeriodCount = 0;
+  const afterDataMainTextArray = (function(checkedAfterData) {
+    const totalLineArray = [];
 
-  for (let i = 0; i < checkedAfterData.length; i ++) {
-    for (let me = 0; me < checkedAfterData[i]['mainDataObject']['object_2_mainTextArray'].length; me ++) {
-      afterDataMainTextSplitPeriodCount ++;
-    }
-  } // end of for (let i = 0; i < checkedAfterData.length; i ++)
+    for (let i = 0; i < checkedAfterData.length; i ++) {
+      for (let me = 0; me < checkedAfterData[i]['mainDataObject']['object_2_mainTextArray'].length; me ++) {
+        totalLineArray.push(checkedAfterData[i]['mainDataObject']['object_2_mainTextArray'][me]);
+      }
+    } // end of for (let i = 0; i < checkedAfterData.length; i ++)
+
+    return totalLineArray;
+  }(checkedAfterData));
+  
+
+  // 編集後の改行に合わせた形に編集前データを作成し、定数に代入します。
+  const beforeDataLineBreakLikeAfterData = makeBeforeDataArrayLikeAfterDataLineBreak(periodSplitBeforeTextArray, afterDataMainTextArray);
 
   
-  // 編集後データと編集前データのそれぞれの本文を「。」で分割した行数を比較し、多いほうの数を取得します。
+  // 編集前データとその改行に合わせて作成した編集前データのそれぞれの要素数を比較し、多いほうの数を取得します。
   // 取得した多いほうの数の疎配列を作成し、この後の本文比較の結果を格納できるようにします。
-  const resultCheckArray = (function(afterDataMainTextSplitPeriodCount, periodSplitBeforeTextArray) {
+  const resultCheckArray = (function(beforeDataLineBreakLikeAfterData, afterDataMainTextArray) {
     const lengthValueArray = [];
-    lengthValueArray.push(afterDataMainTextSplitPeriodCount);
-    lengthValueArray.push(periodSplitBeforeTextArray.length);
+    lengthValueArray.push(beforeDataLineBreakLikeAfterData.length);
+    lengthValueArray.push(afterDataMainTextArray.length);    
 
     return new Array(Math.max(...lengthValueArray));
-  }(afterDataMainTextSplitPeriodCount, periodSplitBeforeTextArray)); // end of const resultCheckArray
+  }(beforeDataLineBreakLikeAfterData, afterDataMainTextArray)); // end of const resultCheckArray
 
-
-  let resultCheckArrayIndexCount = 0;
-
-
-  for (let i = 0; i < checkedAfterData.length; i ++) {
-    for (let me = 0; me < checkedAfterData[i]['mainDataObject']['object_2_mainTextArray'].length; me ++) {
-      if (checkedAfterData[i]['mainDataObject']['object_2_mainTextArray'][me] && periodSplitBeforeTextArray[resultCheckArrayIndexCount]) { // 編集後と編集前の両方がある場合。
-        if (checkedAfterData[i]['mainDataObject']['object_2_mainTextArray'][me] === periodSplitBeforeTextArray[resultCheckArrayIndexCount]) { // 編集後と編集前がイコールの場合。
-          resultCheckArray[resultCheckArrayIndexCount] = true;
-        } else { // 編集後と編集前がイコールではない場合。
-          resultCheckArray[resultCheckArrayIndexCount] = false;
-        }
-      } else { // 編集後と編集前のいずれかがない場合。
-        resultCheckArray[resultCheckArrayIndexCount] = false;
-      }
-      resultCheckArrayIndexCount ++;
-    }
-  } // end of for (let i = 0; i < checkedAfterData.length; i ++)
-
-
-  // 編集後の本文の「。」が編集前の本文の「。」より少ない場合、resultCheckArrayに空要素が発生してしまいます。
-  // 条件分岐を用いて空要素になっている配列にfalseを格納します。
-  if (resultCheckArrayIndexCount < resultCheckArray.length) {
-    for (let i = resultCheckArrayIndexCount; i < resultCheckArray.length; i ++) {
+  
+  // 改行を合わせた編集前データと編集後データを比較し、結果をresultCheckArrayに格納していきます。
+  for (let i = 0; i < resultCheckArray.length; i ++) {
+    if (beforeDataLineBreakLikeAfterData[i] === afterDataMainTextArray[i]) {
+      resultCheckArray[i] = true;
+    } else {
       resultCheckArray[i] = false;
     }
-  } else {
-    // 何もせず次の処理へ。
-  } // end of if (resultCheckArrayIndexCount < resultCheckArray.length)
+  }
 
 
   const comparisonTargetObject = {
     'after': checkedAfterData,
-    'before': periodSplitBeforeTextArray,
+    'before': beforeDataLineBreakLikeAfterData,
   }; // end of const comparisonTargetObject
 
   const nameAttributeObject = {

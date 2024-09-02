@@ -6,5 +6,6 @@ function afterDataProcessing(thisForm, buttonIdString, nameString, outputTargetS
   
   outputAfterDataResult(checkedAfterData, outputTargetString);
 
+  // 返り値はないのでreturnして処理を終えます。
   return;
 }

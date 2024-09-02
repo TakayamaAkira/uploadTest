@@ -23,17 +23,25 @@ function setBeforeDataControl(thisForm, buttonIdString, itemNameObject) {
       // テスト環境ではformにテキストを打ち込んだ状態のため半角スペースを削除する処理を行っています。
       // 本番環境では、本文中の半角スペースまで削除してしまうため、絶対に行わないこと！
       // 下記「本番環境ではこっちを使用」を必ず使用すること。
-      const replaceBeforeData = allStrings.replace(/ /g, '');
 
-      // 文字列の最後にある「\n」を削除します。
+      // テスト環境ここから
+      /*
+      const replaceBeforeData = allStrings.replace(/ /g, '');
       const replaceLastLineBreakStrings = replaceBeforeData.replace(/\n$/, '');
       const splitLineBreakBeforeData = replaceLastLineBreakStrings.split('\n');
+      */
+      // テスト環境ここまで
+
+
+      // 本番環境ここから
+      // /*
+      const replaceLastLineBreakStrings = allStrings.replace(/\n$/, '');
+      const splitLineBreakBeforeData = replaceLastLineBreakStrings.split('\n');
+      // */
+      // 本番環境ここまで
+
 
       return splitLineBreakBeforeData;
-
-      /* 本番環境ではこっちを使用
-      return temporaryStrings;
-      */
 
     } else {
       // 何もせず次の処理へ。

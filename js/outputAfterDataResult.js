@@ -32,7 +32,6 @@ function outputAfterDataResult(argArray = null, outputTargetString) {
 
 
   const deepCopiedArgArray = JSON.parse(JSON.stringify(argArray));
-  outputConsole({ deepCopiedArgArray });
 
   const outputTarget = document.getElementById(outputTargetString);
 
@@ -44,8 +43,8 @@ function outputAfterDataResult(argArray = null, outputTargetString) {
     if (deepCopiedArgArray[i]['allCorrectBool'] === true) {
       outputTarget.innerHTML += 
         '<div class="display-flex padding-all-1rem">' +
-          '<div class="margin-right-2rem">' + 
-            '<label for="after_data_is_correct_format_line[]_' + i + '"><span>問題なし</span></label>' + 
+          '<div class="margin-right-2rem width-18rem">' + 
+            '<label for="after_data_is_correct_format_line[]_' + i + '"><ul><li>問題なし</li></ul></label>' + 
           '</div>' + 
           '<div class="output-textarea">' + 
             // 幅、高さは、実際に編集する際のエディタと同じような感じにしています。
@@ -55,12 +54,22 @@ function outputAfterDataResult(argArray = null, outputTargetString) {
           '</div>' +
         '</div>';
     } else {
+
+      // エラーメッセージを作成します。
+      const errorMessages = (function(argObject) {
+        let temporaryStrings = '';
+
+        const resultMessageArray = makeMessageByAfterDataCorrectFormat(deepCopiedArgArray[i]);
+        for (let me = 0; me < resultMessageArray.length; me ++) {
+          temporaryStrings += '<li>' + resultMessageArray[me] + '</li>';
+        }
+        return temporaryStrings;
+      }(deepCopiedArgArray[i])); // end of const errorMessages
+
       outputTarget.innerHTML += 
         '<div class="display-flex padding-all-1rem">' +
-          '<div class="margin-right-2rem">' + 
-            // ここの出力要素は関数で作成予定です。
-            // deepCopiedArgArrayを関数に渡し、エラー項目を抽出、エラー箇所に応じて出力要素を格納したオブジェクトを作成し、returnすればよさそう。
-            '<label for="after_data_is_correct_format_line[]_' + i + '"><span class="span-alert">問題あり</span></label>' + 
+          '<div class="margin-right-2rem width-18rem">' + 
+            '<label for="after_data_is_correct_format_line[]_' + i + '"><span class="span-alert"><ul">' + errorMessages + '</span></label>' + 
           '</div>' + 
           '<div class="output-textarea">' + 
             // 幅、高さは、実際に編集する際のエディタと同じような感じにしています。

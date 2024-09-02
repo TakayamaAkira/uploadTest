@@ -10,10 +10,23 @@ function setAndCheckAfterData(arg, nameString) {
     // テスト環境ではformにテキストを打ち込んだ状態のため半角スペースを削除する処理を行っています。
     // 本番環境では、本文中の半角スペースまで削除してしまうため、絶対に行わないこと！
     // 下記「本番環境ではこっちを使用」を必ず使用すること。
+
+    // テスト環境ここから
+    /*
     const replaceAfterData = arg.replace(/ /g, '');
     const splitNewLineAfterData = replaceAfterData.split('\n');
     const afterDataMenuArray = makeAfterDataMenuObject(splitNewLineAfterData);
     const lastLengthMinus_1_value = afterDataMenuArray.length - 1;
+    */
+    // テスト環境ここまで
+
+    // 本番環境ここから
+    // /*
+    const splitNewLineAfterData = arg.split('\n');
+    const afterDataMenuArray = makeAfterDataMenuObject(splitNewLineAfterData);
+    const lastLengthMinus_1_value = afterDataMenuArray.length - 1;
+    // */
+    // 本番環境ここまで
       
 
     for (let i = 0; i < afterDataMenuArray.length; i ++) {
@@ -95,11 +108,6 @@ function setAndCheckAfterData(arg, nameString) {
 
     const useBySetObject = JSON.stringify(afterDataMenuArray);
     setItemToSessionStorage(nameString, useBySetObject);
-
-    
-    /* 本番環境ではこっちを使用
-      
-    */
 
 
     // 各チェック結果を格納した配列をreturnして処理を終えます。

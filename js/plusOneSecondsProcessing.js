@@ -21,7 +21,6 @@ function plusOneSecondsProcessing(getItemName, setItemName) {
 
     for (let i = 0; i < deepCopiedArgArray.length; i ++) {
       for (let me = 0; me < deepCopiedArgArray[i]['splitBaseLineStringArray'].length; me ++) {
-        // console.log('i : ' + i + '　本文：' + deepCopiedArgArray[i]['splitBaseLineStringArray'][me]);
 
         switch (me) {
           case 0:
@@ -63,6 +62,9 @@ function plusOneSecondsProcessing(getItemName, setItemName) {
   }(addedOneSecondsAfterData)); // end of const addedOneSecondsResultStrings
 
 
-  const addedOneSecondsCompletedAfterData = setAndCheckAfterData(addedOneSecondsResultStrings, setItemName);
-  outputConsole({ addedOneSecondsCompletedAfterData });
+  // 作成したプラス1秒加工したデータをsetAndCheckAfterDataに渡し、セッションストレージにデータを保存します。
+  setAndCheckAfterData(addedOneSecondsResultStrings, setItemName);
+
+  // 返り値はないためreturnして処理を終えます。
+  return;
 }

@@ -2,10 +2,31 @@ function outputTextCheckResult(outputTargetObject, comparisonTargetObject, nameA
 
   const afterDataOutputTarget = document.getElementById(outputTargetObject['after']);
   const beforeDataOutputTarget = document.getElementById(outputTargetObject['before']);
+  const differenceQuantityOutputTarget = document.getElementById(outputTargetObject['difference']);
 
   // 結果出力欄をデフォルト状態に戻します。戻さないとチェックするたびにどんどん追加されていってしまいます。
   afterDataOutputTarget.innerHTML = '';
   beforeDataOutputTarget.innerHTML = '';
+  differenceQuantityOutputTarget.innerHTML = '';
+
+
+  const differenceQuantityNumber = (function(resultCheckArray) {
+    let temporaryNumber = 0;
+    for (let i = 0; i < resultCheckArray.length; i ++) {
+      if (resultCheckArray[i] === false) {
+        temporaryNumber ++;
+      }
+    } // end of for (let i = 0; i < resultCheckArray.length; i ++)
+
+    return temporaryNumber;
+  }(resultCheckArray)); // end of const differenceQuantityNumber
+
+  if (differenceQuantityNumber !== 0) {
+    differenceQuantityOutputTarget.innerHTML = '<div class="font-weight-bold">本文が異なる箇所数：　<span class="span-alert">' + differenceQuantityNumber + '</span></div>';
+  } else {
+    differenceQuantityOutputTarget.innerHTML = '<div class="font-weight-bold">本文が異なる箇所数：　<span class="span-notification">' + differenceQuantityNumber + '</span></div>';
+  }
+  
 
   let forMeLoopIncrementCount = 0;
 

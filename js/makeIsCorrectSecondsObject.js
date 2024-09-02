@@ -29,11 +29,13 @@ function makeIsCorrectSecondsObject(argObject, currentLengthString) {
 
       // タイムスタンプの秒数が問題ないかどうかには全く影響しない項目です。
       // 後で処理するmakePlusOneSecondsFlagObject関数で使えるようにここで取得、格納しておきます。
-      // 便宜上、次の行の頭からお尻の秒数に問題がないかを解析し、結果を格納しておきます。headToHipと調べることは同じです。
+      // 便宜上、次の行の頭からお尻の秒数に問題がないかを解析しますが、「'withinRangeBool'」は「true」で固定です。
+      // 「今の行」で「次の行」のエラーを取得すると、「今の行」で問題がないのにエラー扱いになってしまうためです。
+      // headToHipと調べることは同じです。
       'nextHeadToNextHip': {
         'secondsValue': 0,
         'flowOfTime': '',
-        'withinRangeBool': false,
+        'withinRangeBool': true,
       },
     };
 
@@ -102,10 +104,12 @@ function makeIsCorrectSecondsObject(argObject, currentLengthString) {
             argObject['flowOfTime'] = 'normal';
             argObject['withinRangeBool'] = true;
           } else {
-            falseCount ++;
+            // 次の行については次のカウンタで「今のカウンタの行」として処理します。
+            // ここでfalseCountをインクリメントすると「今の行」で「次の行の秒数が規定値以内ではない」というエラーが発生してしまいます。
+            // falseCount ++;
             if (argObject['secondsValue'] < nextHeadToNextHipMinimumLimitSeconds) {
               argObject['flowOfTime'] = 'reverseRun';
-            } else if (nextHeadToNextHipOverLimitSeconds < argObject['secondsValue']){
+            } else if (nextHeadToNextHipOverLimitSeconds < argObject['secondsValue']) {
               argObject['flowOfTime'] = 'overRun';
             } else {
               // 何もせず次の処理へ。

@@ -441,6 +441,10 @@ transform: translate(2rem);
   text-align: center;
 }
 
+.text-align-right {
+  text-align: right;
+}
+
 .first-title-in-section {
   border-left: solid lightskyblue 1rem;
   margin: 2rem 0 2rem;
@@ -589,4 +593,9 @@ textarea {
 .download-anchor-tag {
   border: solid;
   background-color: lightgray;
+}
+
+/* 主に編集後データのエラーメッセージ出力に適用するものです。 */
+.width-18rem {
+  width: 18rem;
 }

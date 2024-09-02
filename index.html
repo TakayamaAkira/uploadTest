@@ -28,7 +28,8 @@
                 <!-- 編集前データ貼り付け部分 -->
                 <div class="margin-right-3rem">
                   <label for="before_data" class="display-block margin-bottom-1rem">編集前データ貼り付け欄</label>
-                  <textarea name="before_data" id="before_data" rows="25" cols="50" class="display-block" placeholder="この欄に編集後データを貼り付けてください。"></textarea>
+                  <textarea name="before_data" id="before_data" rows="25" cols="50" class="display-block" placeholder="この欄に編集後データを貼り付けてください。"
+                  ></textarea>
                 </div>
 
                 <!-- 編集後データ貼り付け部分 -->
@@ -79,7 +80,10 @@
             <!-- 編集後データ -->
             <div class="margin-bottom-1rem code padding-all-1rem">
               <form action="" method="POST">
+
+                <!-- ここにJavaScriptで作成した解析結果が出力されます。 -->
                 <div id="output_after_data_result"></div>
+
                 <!-- 編集後データを再度チェックするボタンです。 -->
                 <div class="margin-bottom-3rem">
                   <button type="button" id="output_after_data_result_button" 
@@ -121,7 +125,7 @@
                         'plus_one_seconds_button',
                         {'after': 'plus_one_seconds_after_data', 'before': 'before_data', }, 
                         {'after': 'plus_one_seconds_after_data', 'before': 'before_data', },
-                        {'after': 'output_check_after_text', 'before': 'output_check_before_text', },
+                        {'after': 'output_check_after_text', 'before': 'output_check_before_text', 'difference': 'output_difference_quantity'},
                       );
                     "
                   >
@@ -137,7 +141,7 @@
                         'check_text_after_vs_before',
                         {'after': 'after_data_is_correct_format_line[]', 'before': 'before_data', }, 
                         {'after': 'after_data_is_correct_format_line[]', 'before': 'before_data', },
-                        {'after': 'output_check_after_text', 'before': 'output_check_before_text', },
+                        {'after': 'output_check_after_text', 'before': 'output_check_before_text', 'difference': 'output_difference_quantity'},
                       );
                     "
                   >
@@ -151,67 +155,85 @@
       </section>
 
 
+      <!-- 本文チェック -->
       <section>
         <h2 class="title-in-section">編集後データと編集前データの本文チェック結果出力欄</h2>
         <div class="padding-left-1rem">
+          <!-- 相違数を出力 -->
+          <div id="output_difference_quantity" class="margin-bottom-2rem"></div>
+
           <div class="display-flex">
             <!-- 編集後データ -->
             <div class="margin-bottom-1rem padding-all-1rem">
               <form action="" method="POST">
                 <div  id="output_check_text" class="display-flex margin-bottom-3rem">
-                  <div id="output_check_after_text" class="code padding-all-1rem margin-right-3rem"></div>
-                  <div id="output_check_before_text" class="code padding-all-1rem"></div>
+                  <!-- 編集前データ -->
+                  <div class="margin-right-3rem">
+                    <div><span class="font-weight-bold">編集前データ</span></div>
+                    <div id="output_check_before_text" class="code padding-all-1rem"></div>
+                  </div>
+                  
+                  <!-- 編集後データ -->
+                  <div>
+                    <div><span class="font-weight-bold">編集後データ</span></div>
+                    <div id="output_check_after_text" class="code padding-all-1rem margin-right-3rem"></div>
+                  </div>
                 </div>
 
-                <!-- 本文再チェックボタンです。 -->
-                <div class="margin-bottom-3rem">
-                  <button type="button" id="again_check_text_after_vs_before"
-                    onclick="
-                      setBeforeDataControl(
-                        this.form, 
-                        'again_check_text_after_vs_before', 
-                        { 
-                          'extractionAttributeName': 'checked_before_text[]', 
-                          'setItemName': 'checked_before_text[]'
-                        }
-                      );
-                      checkTextAfterVsBefore(
-                        this.form,
-                        'again_check_text_after_vs_before',
-                        {'after': 'checked_after_text[]', 'before': 'checked_before_text[]', }, 
-                        {'after': 'checked_after_text[]', 'before': 'checked_before_text[]', }, 
-                        {'after': 'output_check_after_text', 'before': 'output_check_before_text', }
-                      );                      
-                    "
-                  >
-                    本文を再チェック
-                  </button>
-                </div>
+                <!-- ボタン類 -->
+                <div class="display-flex">
+                  <div class="code padding-all-1rem">
+                    <!-- 本文再チェックボタンです。 -->
+                    <div class="margin-bottom-3rem">
+                      <button type="button" id="again_check_text_after_vs_before"
+                        onclick="
+                          setBeforeDataControl(
+                            this.form, 
+                            'again_check_text_after_vs_before', 
+                            { 
+                              'extractionAttributeName': 'checked_before_text[]', 
+                              'setItemName': 'checked_before_text[]'
+                            }
+                          );
+                          checkTextAfterVsBefore(
+                            this.form,
+                            'again_check_text_after_vs_before',
+                            {'after': 'checked_after_text[]', 'before': 'checked_before_text[]', }, 
+                            {'after': 'checked_after_text[]', 'before': 'checked_before_text[]', }, 
+                            {'after': 'output_check_after_text', 'before': 'output_check_before_text', 'difference': 'output_difference_quantity'},
+                          );                      
+                        "
+                      >
+                        本文を再チェック
+                      </button>
+                    </div>
 
-                <!-- 納品用データ作成ボタンです。 -->
-                <div>
-                  <button type="button" id="make_deliverable_after_data"
-                    onclick="
-                      setBeforeDataControl(
-                        this.form, 
-                        'again_check_text_after_vs_before', 
-                        { 
-                          'extractionAttributeName': 'checked_before_text[]', 
-                          'setItemName': 'checked_before_text[]'
-                        }
-                      );
-                      checkTextAfterVsBefore(
-                        this.form,
-                        'again_check_text_after_vs_before',
-                        {'after': 'checked_after_text[]', 'before': 'checked_before_text[]', }, 
-                        {'after': 'checked_after_text[]', 'before': 'checked_before_text[]', }, 
-                        {'after': 'output_check_after_text', 'before': 'output_check_before_text', }
-                      );
-                      makeDeliverableAfterData('checked_after_text[]', 'output_deliverable_after_data', 'download_target');
-                    "
-                  >
-                    納品用データを作成
-                  </button>
+                    <!-- 納品用データ作成ボタンです。 -->
+                    <div>
+                      <button type="button" id="make_deliverable_after_data"
+                        onclick="
+                          setBeforeDataControl(
+                            this.form, 
+                            'again_check_text_after_vs_before', 
+                            { 
+                              'extractionAttributeName': 'checked_before_text[]', 
+                              'setItemName': 'checked_before_text[]'
+                            }
+                          );
+                          checkTextAfterVsBefore(
+                            this.form,
+                            'again_check_text_after_vs_before',
+                            {'after': 'checked_after_text[]', 'before': 'checked_before_text[]', }, 
+                            {'after': 'checked_after_text[]', 'before': 'checked_before_text[]', }, 
+                            {'after': 'output_check_after_text', 'before': 'output_check_before_text', 'difference': 'output_difference_quantity'},
+                          );
+                          makeDeliverableAfterData('checked_after_text[]', 'output_deliverable_after_data', 'download_target');
+                        "
+                      >
+                        納品用データを作成
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </form>
             </div>            
@@ -259,16 +281,19 @@
     <script src="js/convertSecondsFromTimeStamp.js"></script>
     <script src="js/convertSecondsToTimeObject.js"></script>
     <script src="js/doPlusOneSeconds.js"></script>
+    <script src="js/extractionKeyMathMaxOfImaginaryObject.js"></script>
     <script src="js/getItemFromSessionStorage.js"></script>
     <script src="js/makeAddedPlusOneTimeStampString.js"></script>
     <script src="js/makeAfterDataMenuObject.js"></script>
     <script src="js/makeArraySplitTabKey.js"></script>
     <script src="js/makeBeforeDataMenuObject.js"></script>
     <script src="js/makeDeliverableAfterData.js"></script>
+    <script src="js/makeBeforeDataArrayLikeAfterDataLineBreak.js"></script>
     <script src="js/makeIsCorrectFormatObject.js"></script>
     <script src="js/makeIsCorrectSecondsObject.js"></script>
     <script src="js/makeMainDataObject.js"></script>
     <script src="js/makeMainTextArray.js"></script>
+    <script src="js/makeMessageByAfterDataCorrectFormat.js"></script>
     <script src="js/makeNowTimeString.js"></script>
     <script src="js/makePlusOneSecondsFlagObject.js"></script>
     <script src="js/makeSecondsValueObject.js"></script>
@@ -282,25 +307,6 @@
     <script src="js/setAndCheckAfterData.js"></script>
     <script src="js/setBeforeDataControl.js"></script>
     <script src="js/setItemToSessionStorage.js"></script>
-    <script src="js/textCheckedAfterDataProcessing.js"></script>
-    
-    <script>
-
-      
-
-      window.addEventListener('load', () => {
-      
-        /*
-        if (sessionStorage.getItem('after_data')) {
-          console.log('セッションストレージからafter_dataの取得に成功しました');
-          plusOneSecondsProcessing('after_data', 'plus_one_seconds_after_data');
-        } else {
-          console.log('after_dataはまだセッションストレージに保存されていません');
-        }
-        */
-
-      });
-    </script>
 
   </body>
 </html>
